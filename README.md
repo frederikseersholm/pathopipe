@@ -7,7 +7,7 @@ The pipeline is described in detail in Sikora et al., 2025, **"The spatiotempora
 - [About](#about)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Input / Output](#input-output)
+- [Output Files](#output-files)
 - [Configuration](#configuration)
 - [Workflow Overview](#workflow-overview)
 - [Examples](#examples)
@@ -70,3 +70,5 @@ You can use the provided Snakefile or summarize.Snakefile for different stages o
 snakemake -s summarize.Snakefile --configfile config.yml --cores <N>
 ```
 
+## Output files
+For each sample listed in your units file, a summary table will be generated in `tables/<SAMPLE>/<PREFIX>.summary.tsv.gz`. This output table contains summary statistics for all species within the genera detected. Furthermore, for each sample/genus combination edit distance and damage plots will be generated: `plots/<SAMPLE>/<GENUSTAXID>.<PREFIX>.editDist.pdf` and `plots/<SAMPLE>/<GENUSTAXID>.<PREFIX>.damage.pdf`. 
