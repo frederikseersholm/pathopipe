@@ -8,13 +8,7 @@ The pipeline is described in detail in Sikora et al., 2025, **"The spatiotempora
 - [Installation](#installation)
 - [Usage](#usage)
 - [Output Files](#output-files)
-- [Configuration](#configuration)
-- [Workflow Overview](#workflow-overview)
-- [Examples](#examples)
-- [Requirements](#requirements)
-- [Contributing](#contributing)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## About
 `pathopipe` is a Snakemake workflow designed to identify and classify microbial DNA within ancient shotgun sequencing data. The workflow was developed to detect pathogens in ancient human data, but it can be applied across a wide range of microbial and eukaryotic targets, using sequencing data from various sources such as animal remains and ancient environmental samples. 
@@ -49,21 +43,21 @@ cd pathopipe
     - R package inlabru (2.8.0)
     - R package Rsamtools (2.14.0)
    
-4. Download reference database:
+4. Download and unpack reference database:
    ```
-   https://doi.org/10.17894/ucph.f0f75211-7bc3-445d-90c0-b72a22ba0930
+   wget https://erda.ku.dk/archives/1d29e091b69cabe43093440eeb396212/diseases/public_supplementary_data_repo/hum_microbe_release_20250428.tar.gz
+   tar -xvzf hum_microbe_release_20250428.tar.gz
    ```
 
 ## Usage
-Create a tab-separated list of sample-IDs and corresponding fastq files with column names `sampleId` and `fq` (see example file `units.tsv`). Edit your config.yml to point to your units file, reference databases, and modify other parameters if relevant.
+Create a tab-separated list of sample-IDs and corresponding fastq files with column names `sampleId` and `fq` (see example file `units.tsv`). Edit your config.yml to point to your units file, reference databases (e.g. `./hum_microbe_release_20250428`), and modify any other parameters if needed.
 
 To run the workflow:
 
 ```
 snakemake --configfile config.yml --cores <N>
 ```
-Replace <N> with the number of CPU cores you wish to allocate.
-You can use the provided Snakefile or summarize.Snakefile for different stages of the analysis.
+Replace `<N>` with the number of CPU cores you wish to allocate.
 
 (Optional) To summarise results across all samples analysed after completion of the pathopipe pipeline, run:
 ```
@@ -72,3 +66,27 @@ snakemake -s summarize.Snakefile --configfile config.yml --cores <N>
 
 ## Output files
 For each sample listed in your units file, a summary table will be generated in `tables/<SAMPLE>/<PREFIX>.summary.tsv.gz`. This output table contains summary statistics for all species within the genera detected. Furthermore, for each sample/genus combination edit distance and damage plots will be generated: `plots/<SAMPLE>/<GENUSTAXID>.<PREFIX>.editDist.pdf` and `plots/<SAMPLE>/<GENUSTAXID>.<PREFIX>.damage.pdf`. 
+
+## License
+
+`pathopipe` is released under the MIT License.
+
+Copyright (c) 2025 Martin Sikora
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
